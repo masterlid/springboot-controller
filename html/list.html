@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <!-- ФРАГМЕНТ мета -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="" />
+        <meta name="description" content="" />
+        <meta name="generator" content="" />
+
+        <!-- ФРАГМЕНТ стилей -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.1/css/bootstrap.min.css" integrity="sha512-6KY5s6UI5J7SVYuZB4S/CZMyPylqyyNZco376NM2Z8Sb8OxEdp02e1jkKk/wZxIEmjQ6DRCEBhni+gpr9c4tvA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.2/css/perfect-scrollbar.min.css" integrity="sha512-ygIxOy3hmN2fzGeNqys7ymuBgwSCet0LVfqQbWY10AszPMn2rB9JY0eoG0m1pySicu+nvORrBmhHVSt7+GI9VA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+        <!-- ФРАГМЕНТ заголовка (зависит от URL) -->
+        <title>Список пользователей</title>
+
+    </head>
+    <body>
+        <section class="layout-panel">
+            <div class="ui-block">
+                <div class="header">
+                    <i class="fas fa-paw"></i>Spring-Boot
+
+                    <!-- ФРАГМЕНТ меню пользователя -->
+                    <div class="user-menu">
+                        <i class="fas fa-user-circle">
+                            <div class="menu">
+                                <div class="items">
+                                    <a href=""><i class="fas fa-sign-out-alt"></i> Выход</a>
+                                </div>
+                            </div>
+                        </i>
+                    </div>
+
+                </div>
+                <div class="body">
+
+                    <!-- ФРАГМЕНТ хлебных крошек (зависит от URL) -->
+                    <h3 class="breadcrumbs">
+                        <a href="">Главная</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <a href="">Пользователи</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>Список</span>
+                    </h3>
+
+                    <!-- ФРАГМЕНТ главного меню (зависит от URL) -->
+                    <div class="menu">
+                        <em><i class="fas fa-users"></i> Пользователи</em>
+                        <ul>
+                            <li>
+                                <a href="" class="active">Список</a>
+                            </li>
+                            <li>
+                                <a href="">Поиск</a>
+                            </li>
+                            <li>
+                                <a href="">Создать</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="content" id="content">
+
+                        <!-- ФРАГМЕНТ содержимого (зависит от URL) -->
+                        <table class="table-1">
+                            <thead>
+                                <tr>
+                                    <th width="10%">ID</th>
+                                    <th width="10%">Вкл/выкл</th>
+                                    <th width="15%">Логин</th>
+                                    <th width="45%">Информация</th>
+                                    <th width="20%">Действия</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>admin</td>
+                                    <td>
+                                        <section class="info">
+                                            <div class="info-row">
+                                                <div class="caption">Фамилия</div>
+                                                <div clas="data">Админов</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Имя</div>
+                                                <div clas="data">Иван</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Отчество</div>
+                                                <div clas="data">Иванович</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Пол</div>
+                                                <div clas="data">муж</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Email</div>
+                                                <div clas="data">ivan.adminov@lid.tv</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Регистрация</div>
+                                                <div clas="data">2021-10-14</div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-phone-square text-primary" title="Контакты"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" />
+                                    </td>
+                                    <td>visitor</td>
+                                    <td>
+                                        <section class="info">
+                                            <div class="info-row">
+                                                <div class="caption">Фамилия</div>
+                                                <div clas="data">Визиторов</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Имя</div>
+                                                <div clas="data">Виктор</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Отчество</div>
+                                                <div clas="data">Викторович</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Пол</div>
+                                                <div clas="data">муж</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Email</div>
+                                                <div clas="data">viktor.visitorov@lid.tv</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Регистрация</div>
+                                                <div clas="data">2021-10-16</div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-phone-square text-primary" title="Контакты"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>manager</td>
+                                    <td>
+                                        <section class="info">
+                                            <div class="info-row">
+                                                <div class="caption">Фамилия</div>
+                                                <div clas="data">Манжерова</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Имя</div>
+                                                <div clas="data">Марина</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Отчество</div>
+                                                <div clas="data">Матвеевна</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Пол</div>
+                                                <div clas="data">жен</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Email</div>
+                                                <div clas="data">marina.manzherova@lid.tv</div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="caption">Регистрация</div>
+                                                <div clas="data">2021-10-18</div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-phone-square text-primary" title="Контакты"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <ul class="page-control">
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li class="active">4</li>
+                            <li>6</li>
+                            <li class="skip"></li>
+                            <li>7</li>
+                            <li>8</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ФРАГМЕНТ скриптов -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.2/perfect-scrollbar.min.js" integrity="sha512-byagY9YdfRsmvM/9ld4XQ9mvd9uNhNOaMzvCYpPw1CLuoIXAdWR8/6rHjRwuWy0Pi+JGWjDHiE7tVGhtPd21ZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            $(document).ready(function() {
+                const content = document.querySelector('#content');
+                if (content) {
+                    const ps = new PerfectScrollbar(content);
+                }
+            });
+        </script>
+    </body>
+</html>

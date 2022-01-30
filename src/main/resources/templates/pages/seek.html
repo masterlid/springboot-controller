@@ -1,0 +1,27 @@
+<th:block th:fragment="content">
+    <form id="user-seek-form" action="/seek" method="post">
+        <div class="form-horizontal seek-user">
+            <div class="form-header">Поиск пользователя</div>
+            <div class="form-row">
+                <label for="user-seek-value" class="form-label">Что ищем</label>
+                <input type="text" class="form-control" id="user-seek-value" name="seek" placeholder="Имя, фамилия, email и т.п." />
+            </div>
+            <div class="form-row buttons">
+                <button type="button" class="btn btn-primary" onclick="submit()">OK</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="cancel()">Отмена</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        function submit() {
+            const s = $('#user-seek-value').val();
+            if (s && !/^\s+$/.test(s)) {
+                $('#user-seek-form').submit();
+            }
+        }
+
+        function cancel() {
+            $('#user-seek-value').val('');
+        }
+    </script>
+</th:block>

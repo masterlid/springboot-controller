@@ -1,0 +1,92 @@
+<th:block th:fragment="default">
+    <!doctype html>
+    <html lang="ru" xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <th:block th:insert="fragments/common.html :: meta"></th:block>
+            <th:block th:insert="fragments/common.html :: styles"></th:block>
+            <th:block th:insert="fragments/common.html :: title('login')"></th:block>
+        </head>
+        <body>
+            <section class="login-panel">
+                <div class="ui-block authorize">
+                    <div class="header"><i class="fas fa-unlock-alt"></i> Авторизация</div>
+                    <div class="body">
+                        <form>
+                            <div class="mb-2">
+                                <label for="login-or-email" class="form-label">Логин или email</label>
+                                <input type="email" class="form-control" id="login-or-email" autocomplete="off" />
+                            </div>
+                            <div class="mb-2">
+                                <label for="password" class="form-label">Пароль</label>
+                                <input type="password" class="form-control" id="password" />
+                            </div>
+                            <div class="mb-4 form-check">
+                                <input type="checkbox" class="form-check-input" id="remember-me" />
+                                <label class="form-check-label" for="remember-me">запомнить меня</label>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" onclick="authorize()">OK</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="cancel()">Сброс</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section class="modal-background" onclick="hideAlert()">
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle"></i> <span></span>
+                </div>
+            </section>
+
+            <th:block th:insert="fragments/common.html :: preloader"></th:block>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="/js/common.js"></script>
+            <script>
+                function showAlert(message) {
+                    $('.modal-background > .alert span').text(message);
+                    $('.modal-background').css('display', 'flex');
+                }
+
+                function hideAlert() {
+                    $('.modal-background').css('display', 'none');
+                }
+
+                function authorize() {
+                    const loginOrEmail = $('#login-or-email').val();
+                    const password     = $('#password').val();
+                    const regExEmpty   = /^\s+$/;
+
+                    if (!loginOrEmail || regExEmpty.test(loginOrEmail) || !password || regExEmpty.test(password)) {
+                        showAlert('Пожалуйста укажите данные для авторизации!');
+                        return;
+                    }
+
+                    preloader(true);
+                    $.ajax({
+                        url: '/auth',
+                        type: 'POST',
+                        data: JSON.stringify({
+                            loginOrEmail,
+                            password
+                        }),
+                        contentType: 'application/json',
+                        success: () => {
+                            document.location.href = '/';
+                        },
+                        error: () => {
+                            preloader(false);
+                            showAlert('Данные для авторизации указаны неправильно!');
+                        }
+                    });
+                }
+
+                function cancel() {
+                    $('#login-or-email').val('');
+                    $('#password').val('');
+                }
+            </script>
+        </body>
+    </html>
+</th:block>

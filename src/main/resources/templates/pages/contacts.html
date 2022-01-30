@@ -1,0 +1,228 @@
+<th:block th:fragment="content">
+    <table class="table-1">
+        <thead>
+            <tr>
+                <th width="10%">ID</th>
+                <th width="10%">Вкл/выкл</th>
+                <th width="10%">Тип</th>
+                <th width="50%">Значение</th>
+                <th width="20%">Действия</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="contact: ${list}">
+                <td th:text="${contact.getId()}"></td>
+                <td class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" th:checked="${contact.getIsActive()}" th:onclick="activate([[${contact.id}]], this)" />
+                </td>
+                <td th:switch="${contact.getType()}">
+                    <div th:case="10" class="contact-icon phone" title="Телефон"></div>
+                    <div th:case="20" class="contact-icon email" title="Email"></div>
+                    <div th:case="30" class="contact-icon skype" title="Skype"></div>
+                    <div th:case="40" class="contact-icon facebook" title="Facebook"></div>
+                    <div th:case="50" class="contact-icon twitter" title="Twitter"></div>
+                    <div th:case="60" class="contact-icon youtube" title="YouTube"></div>
+                    <div th:case="70" class="contact-icon vk" title="VK"></div>
+                </td>
+                <td th:text="${contact.getContact()}"></td>
+                <td>
+                    <div class="action">
+                        <div class="action-btn" th:onclick="edit([[${contact.id}]], [[${contact.type}]], [[${contact.contact}]])">
+                            <i class="fas fa-edit text-success" title="Редактировать"></i>
+                        </div>
+                        <div class="action-btn" th:onclick="kill([[${contact.id}]])">
+                            <i class="fas fa-times text-danger" title="Удалить"></i>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-controls">
+        <button type="button" class="btn btn-outline-success" onclick="create()">
+            <i class="fas fa-plus"></i>&nbsp;Добавить
+        </button>
+        <button type="button" class="btn btn-outline-secondary" onclick="back()">Назад</button>
+    </div>
+
+    <section class="modal-background">
+        <input type="hidden" id="user-contact-id" value="" />
+        <div class="form-horizontal edit-contact">
+            <div class="form-header">Новый контакт</div>
+            <div class="form-row">
+                <label for="user-contact-type" class="form-label required">Тип</label>
+                <select id="user-contact-type" class="form-select">
+                    <option>&mdash;&mdash;&mdash; выберите &mdash;&mdash;&mdash;</option>
+                    <option value="10">Телефон</option>
+                    <option value="20">Email</option>
+                    <option value="30">Skype</option>
+                    <option value="40">Facebook</option>
+                    <option value="50">Twitter</option>
+                    <option value="60">YouTube</option>
+                    <option value="70">VK</option>
+                </select>
+            </div>
+            <div class="invalid-feedback inactive" data-for="user-contact-type">Пожалуйста, укажите тип</div>
+            <div class="form-row">
+                <label for="user-contact-value" class="form-label required">Значение</label>
+                <input type="text" id="user-contact-value" class="form-control" placeholder="" />
+            </div>
+            <div class="invalid-feedback inactive" data-for="user-contact-value">Пожалуйста, укажите значение</div>
+            <div class="form-row buttons">
+                <button type="button" class="btn btn-primary" onclick="save()">OK</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="hideContactEdit()">Отмена</button>
+            </div>
+        </div>
+    </section>
+
+    <script th:inline="javascript">
+        // идентификатор пользователя
+        const userId = [[${userId}]];
+
+        // возврат к списку пользователей
+        function back() {
+            const page = window.sessionStorage.getItem('page') || '1';
+            document.location.href = page !== '1' ? `/list/${page}` : '/list';
+        }
+
+        // включить/выключить контакт
+        function activate(id, obj) {
+            const active = $(obj).prop('checked');
+            $.ajax({
+                url  : `/contacts/${active ? 'activate' : 'deactivate'}/${id}`,
+                type : 'PUT',
+                data : '{}',
+                contentType: 'application/json',
+                error: () => {
+                    window.alert('Не удалось изменить статус контакта!');
+                }
+            });
+        }
+
+        function prepareData() {
+            var isValid = true;
+            if ($('#user-contact-type option:selected').index() === 0) {
+                $('label[for="user-contact-type"]').addClass('is-invalid');
+                $('#user-contact-type').addClass('is-invalid');
+                $('label[data-for="user-contact-type"]').removeClass('inactive');
+                isValid = false;
+            } else {
+                $('label[for="user-contact-type"]').removeClass('is-invalid');
+                $('#user-contact-type').removeClass('is-invalid');
+                $('label[data-for="user-contact-type"]').addClass('inactive');
+            }
+
+            var value = $('#user-contact-value').val();
+            if (isEmpty(value)) {
+                $('label[for="user-contact-value"]').addClass('is-invalid');
+                $('#user-contact-value').addClass('is-invalid');
+                $('label[data-for="user-contact-value"]').removeClass('inactive');
+                isValid = false;
+            } else {
+                $('label[for="user-contact-value"]').removeClass('is-invalid');
+                $('#user-contact-value').removeClass('is-invalid');
+                $('label[data-for="user-contact-value"]').addClass('inactive');
+            }
+
+            return isValid ? {type: parseInt($('#user-contact-type').val(), 10), value} : null;
+        }
+
+        function showContactEdit() {
+            $('.modal-background').css('display', 'flex');
+        }
+
+        function hideContactEdit() {
+            $('.modal-background').css('display', 'none');
+        }
+
+        // создание нового контакта
+        function create() {
+            $('#user-contact-id').val('');
+            $('.modal-background .form-header').html('Новый контакт');
+            $('#user-contact-type').prop('selectedIndex', 0);
+            $('label[for="user-contact-type"]').removeClass('is-invalid');
+            $('#user-contact-type').removeClass('is-invalid');
+            $('label[data-for="user-contact-type"]').addClass('inactive');
+            $('#user-contact-value').val('');
+            $('label[for="user-contact-value"]').removeClass('is-invalid');
+            $('#user-contact-value').removeClass('is-invalid');
+            $('label[data-for="user-contact-value"]').addClass('inactive');
+            showContactEdit();
+        }
+
+        // редактирование контакта
+        function edit(id, type, value) {
+            $('#user-contact-id').val(id);
+            $('.modal-background .form-header').html('Редактирование контакта');
+            $('#user-contact-type').val(type);
+            $('label[for="user-contact-type"]').removeClass('is-invalid');
+            $('#user-contact-type').removeClass('is-invalid');
+            $('label[data-for="user-contact-type"]').addClass('inactive');
+            $('#user-contact-value').val(value);
+            $('label[for="user-contact-value"]').removeClass('is-invalid');
+            $('#user-contact-value').removeClass('is-invalid');
+            $('label[data-for="user-contact-value"]').addClass('inactive');
+            showContactEdit();
+        }
+
+        // сохранение контакта
+        function save() {
+            const data = prepareData();
+            if (data !== null) {
+                preloader(true);
+                $.ajax({
+                    url  : encodeURI(`/contacts/check/${data.type}/${data.value}`),
+                    type : 'GET',
+                    contentType: 'application/json',
+                    success: () => {
+                        const contactId = $('#user-contact-id').val();
+                        const [url, type] = !contactId
+                            ? [`/contacts/${userId}/create`, 'POST'] // новый контакт
+                            : [`/contacts/edit/${contactId}`, 'PUT'] // ранее созданный контакт
+                        $.ajax({
+                            url,
+                            type,
+                            data: JSON.stringify(data),
+                            contentType: 'application/json',
+                            success: () => {
+                                window.location.reload();
+                            },
+                            error: () => {
+                                preloader(false);
+                                window.alert('Не удалось сохранить контакт!');
+                            }
+                        });
+                    },
+                    error: () => {
+                        preloader(false);
+                        window.alert('Такой контакт уже существует!');
+                    }
+                });
+            }
+        }
+
+        // удаление контакта
+        function kill(id) {
+            if (confirm('Вы действительно хотите удалить данный контакт?')) {
+                preloader(true);
+                $.ajax({
+                    url  : `/contacts/kill/${id}`,
+                    type : 'DELETE',
+                    data : '{}',
+                    contentType: 'application/json',
+                    success: () => {
+                        preloader(false);
+                        window.location.reload();
+                    },
+                    error: () => {
+                        preloader(false);
+                        window.alert('Не удалось удалить контакт!');
+                    }
+                });
+            }
+        }
+
+    </script>
+</th:block>

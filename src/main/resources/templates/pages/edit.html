@@ -1,0 +1,286 @@
+<th:block th:fragment="content(route)">
+    <div class="alert alert-danger fade show d-none" role="alert" id="user-alert"></div>
+    <form name="user-edit">
+        <input type="hidden" id="user-id" th:value="${user.id}" />
+        <div class="form-horizontal edit-user">
+            <div class="form-header" th:if="${route == 'create'}">Новый пользователь</div>
+            <div class="form-header" th:if="${route == 'edit'}">Редактирование пользователя</div>
+            <div class="form-row">
+                <label for="user-login" class="form-label required">Логин</label>
+                <input type="text" class="form-control" id="user-login" th:attr="data-login-value=${user.login}" th:value="${user.login}" />
+            </div>
+            <div class="form-row">
+                <label for="user-password-1" class="form-label required">Пароль</label>
+                <input type="password" class="form-control" id="user-password-1" th:value="${user.id == null ? '' : '**********'}" />
+            </div>
+            <div class="form-row">
+                <label for="user-password-2" class="form-label required">Пароль (еще раз)</label>
+                <input type="password" class="form-control" id="user-password-2" th:value="${user.id == null ? '' : '**********'}" />
+            </div>
+            <div class="form-row">
+                <label for="user-last-name" class="form-label required">Фамилия</label>
+                <input type="text" class="form-control" id="user-last-name" th:value="${user.lastName}" />
+            </div>
+            <div class="form-row">
+                <label for="user-first-name" class="form-label required">Имя</label>
+                <input type="text" class="form-control" id="user-first-name" th:value="${user.firstName}" />
+            </div>
+            <div class="form-row">
+                <label for="user-patronymic" class="form-label">Отчество</label>
+                <input type="text" class="form-control" id="user-patronymic" th:value="${user.patronymic}" />
+            </div>
+            <div class="form-row">
+                <label for="user-email" class="form-label required">Email</label>
+                <input type="email" class="form-control" id="user-email" th:attr="data-email-value=${user.email}" th:value="${user.email}" />
+            </div>
+            <div class="form-row">
+                <label for="user-gender" class="form-label required">Пол</label>
+                <div class="radio-inputs">
+                    <input class="form-check-input" type="radio" name="user-gender" id="user-gender-1" value="5" th:checked="${user.gender == 5}" />
+                    <label class="form-check-label" for="user-gender-1">муж</label>
+                    <input class="form-check-input" type="radio" name="user-gender" id="user-gender-2" value="-5" th:checked="${user.gender == -5}" />
+                    <label class="form-check-label" for="user-gender-1">жен</label>
+                </div>
+            </div>
+            <div class="form-row checkbox">
+                <label for="user-privileges" class="form-label">Администратор</label>
+                <input type="checkbox" class="form-check-input" id="user-privileges" th:checked="${user.privileges == 100}" />
+            </div>
+            <div class="form-row checkbox">
+                <label for="user-is-active" class="form-label">Включён</label>
+                <input type="checkbox" class="form-check-input" id="user-is-active" th:checked="${user.id == null ? true : user.isActive}" />
+            </div>
+            <div class="form-row buttons">
+                <button type="button" class="btn btn-primary" onclick="save()">Сохранить</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="back()">Назад</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        // возврат к списку пользователей
+        function back() {
+            const page = window.sessionStorage.getItem('page') || '1';
+            document.location.href = page !== '1' ? `/list/${page}` : '/list';
+        }
+
+        // подготовить данные для отправки на сервер
+        function prepareData() {
+            const INCORRECT_DATA    = 'Пожалуйста, заполните корректно все поля формы!';
+            const NO_PASSWORD_MATCH = 'Пожалуйста, укажите два совпадающих пароля!';
+
+            const id = $('#user-id').val();
+            const login = $('#user-login').val();
+            const password1 = $('#user-password-1').val();
+            const password2 = $('#user-password-2').val();
+            const lastName = $('#user-last-name').val();
+            const firstName = $('#user-first-name').val();
+            const patronymic = $('#user-patronymic').val() ? $('#user-patronymic').val() : '';
+            const email = $('#user-email').val();
+            const gender = $('#user-gender-1').is(':checked') ? 5 : ($('#user-gender-2').is(':checked') ? -5 : 0);
+            const privileges = $('#user-privileges').is(':checked') ? 100 : 0;
+            const isActive = $('#user-is-active').is(':checked');
+
+            let errorMsg = null;
+
+            if (isEmpty(login)) {
+                $('label[for="user-login"]').addClass('is-invalid');
+                $('#user-login').addClass('is-invalid');
+                errorMsg = INCORRECT_DATA;
+            } else {
+                $('label[for="user-login"]').removeClass('is-invalid');
+                $('#user-login').removeClass('is-invalid');
+            }
+
+            if (isEmpty(password1) || isEmpty(password2)) {
+                if (isEmpty(password1)) {
+                    $('label[for="user-password-1"]').addClass('is-invalid');
+                    $('#user-password-1').addClass('is-invalid');
+                    errorMsg = errorMsg || INCORRECT_DATA;
+                } else {
+                    $('label[for="user-password-1"]').removeClass('is-invalid');
+                    $('#user-password-1').removeClass('is-invalid');
+                }
+
+                if (isEmpty(password2)) {
+                    $('label[for="user-password-2"]').addClass('is-invalid');
+                    $('#user-password-2').addClass('is-invalid');
+                    errorMsg = errorMsg || INCORRECT_DATA;
+                } else {
+                    $('label[for="user-password-2"]').removeClass('is-invalid');
+                    $('#user-password-2').removeClass('is-invalid');
+                }
+            } else {
+                if (password1 !== password2) {
+                    $('label[for="user-password-1"]').addClass('is-invalid');
+                    $('#user-password-1').addClass('is-invalid');
+                    $('label[for="user-password-2"]').addClass('is-invalid');
+                    $('#user-password-2').addClass('is-invalid');
+                    errorMsg = errorMsg || NO_PASSWORD_MATCH;
+                } else {
+                    $('label[for="user-password-1"]').removeClass('is-invalid');
+                    $('#user-password-1').removeClass('is-invalid');
+                    $('label[for="user-password-2"]').removeClass('is-invalid');
+                    $('#user-password-2').removeClass('is-invalid');
+                }
+            }
+
+            if (isEmpty(lastName)) {
+                $('label[for="user-last-name"]').addClass('is-invalid');
+                $('#user-last-name').addClass('is-invalid');
+                errorMsg = errorMsg || INCORRECT_DATA;
+            } else {
+                $('label[for="user-last-name"]').removeClass('is-invalid');
+                $('#user-last-name').removeClass('is-invalid');
+            }
+
+            if (isEmpty(firstName)) {
+                $('label[for="user-first-name"]').addClass('is-invalid');
+                $('#user-first-name').addClass('is-invalid');
+                errorMsg = errorMsg || INCORRECT_DATA;
+            } else {
+                $('label[for="user-first-name"]').removeClass('is-invalid');
+                $('#user-first-name').removeClass('is-invalid');
+            }
+
+            if (isEmpty(email)) {
+                $('label[for="user-email"]').addClass('is-invalid');
+                $('#user-email').addClass('is-invalid');
+                errorMsg = errorMsg || INCORRECT_DATA;
+            } else {
+                $('label[for="user-email"]').removeClass('is-invalid');
+                $('#user-email').removeClass('is-invalid');
+            }
+
+            if (!gender) {
+                $('label[for="user-gender"]').addClass('is-invalid');
+                errorMsg = errorMsg || INCORRECT_DATA;
+            } else {
+                $('label[for="user-gender"]').removeClass('is-invalid');
+            }
+
+            if (errorMsg) {
+                $('.alert')
+                    .removeClass('alert-success')
+                    .addClass('alert-danger')
+                    .html(errorMsg)
+                    .removeClass('d-none');
+                return null;
+            } else {
+                $('.alert')
+                    .addClass('d-none');
+                return {
+                    id,
+                    login,
+                    password: password1 === '**********' ? null : password1,
+                    lastName,
+                    firstName,
+                    patronymic,
+                    email,
+                    gender,
+                    privileges,
+                    isActive,
+                };
+            }
+        }
+
+        // сохранить пользователя
+        function save() {
+            const UNABLE_TO_SAVE   = 'Не удалось сохранить информацию о пользователе!';
+            const LOGIN_OCCUPIED   = 'Выбранный логин уже занят!';
+            const EMAIL_OCCUPIED   = 'Выбранный email уже занят!';
+            const SUCCESSFULL_SAVE = 'Данные о пользователе были успешно обновлены';
+
+            const data = prepareData();
+            if (data !== null) {
+                // проверка доступности логина
+                const CHECK_LOGIN = (login) => new Promise((resolve, reject) => {
+                    $.ajax({
+                        url     : `/check/login/${login}`,
+                        type    : 'GET',
+                        success : resolve,
+                        error   : () => {
+                            $('.alert')
+                                .removeClass('alert-success')
+                                .addClass('alert-danger')
+                                .html(LOGIN_OCCUPIED)
+                                .removeClass('d-none');
+                            reject();
+                        }
+                    });
+                });
+                // проверка доступности email
+                const CHECK_EMAIL = (email) => new Promise((resolve, reject) => {
+                    $.ajax({
+                        url     : `/check/email/${email}`,
+                        type    : 'GET',
+                        success : resolve,
+                        error   : () => {
+                            $('.alert')
+                                .removeClass('alert-success')
+                                .addClass('alert-danger')
+                                .html(EMAIL_OCCUPIED)
+                                .removeClass('d-none');
+                            reject();
+                        }
+                    });
+                });
+
+                let checkLogin, checkEmail;
+                let url, type;
+
+                if (data.id) {
+                    const oldLogin = $('#user-login').attr('data-login-value');
+                    const oldEmail = $('#user-email').attr('data-email-value');
+
+                    checkLogin = data.login !== oldLogin ? CHECK_LOGIN(data.login) : Promise.resolve();
+                    checkEmail = data.email !== oldEmail ? CHECK_EMAIL(data.email) : Promise.resolve();
+                    url        = `/edit/${data.id}`;
+                    type       = 'PUT';
+                } else {
+                    checkLogin = CHECK_LOGIN(data.login);
+                    checkEmail = CHECK_EMAIL(data.email);
+                    url        = '/create';
+                    type       = 'POST';
+                }
+
+                preloader(true);
+                Promise.all([
+                    checkLogin,
+                    checkEmail
+                ]).then(() => {
+                    $.ajax({
+                        url,
+                        type,
+                        data: JSON.stringify(data),
+                        contentType : 'application/json',
+                        success: () => {
+                            if (data.id) {
+                                preloader(false);
+                                $('.alert')
+                                    .removeClass('alert-danger')
+                                    .addClass('alert-success')
+                                    .html(SUCCESSFULL_SAVE)
+                                    .removeClass('d-none');
+                                window.setTimeout(() => {
+                                    $('.alert').addClass('d-none');
+                                }, 3000);
+                            } else {
+                                document.location.href = '/list';
+                            }
+                        },
+                        error: () => {
+                            preloader(false);
+                            $('.alert')
+                                .removeClass('alert-success')
+                                .addClass('alert-danger')
+                                .html(UNABLE_TO_SAVE)
+                                .removeClass('d-none');
+                        },
+                    });
+                }).catch(() => {
+                    preloader(false);
+                });
+            }
+        }
+    </script>
+</th:block>

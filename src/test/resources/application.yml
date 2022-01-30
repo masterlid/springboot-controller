@@ -1,0 +1,35 @@
+server:
+    address: localhost
+    port: 8088
+    servlet:
+        context-path: /
+
+spring:
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/sb_users_test?useUnicode=true&characterEncoding=UTF-8
+        username: sb
+        password: sb123123
+        initialize: true
+        initialization-mode: always
+        sql-script-encoding: UTF-8
+    jpa:
+        hibernate:
+            ddl-auto: none
+
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+            force-request: true
+            force-response: true
+
+    main:
+        banner-mode: off
+
+logging:
+    level:
+        org:
+            springframework: OFF
+        root: OFF

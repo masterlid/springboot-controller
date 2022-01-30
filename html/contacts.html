@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="" />
+        <meta name="description" content="" />
+        <meta name="generator" content="" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.1/css/bootstrap.min.css" integrity="sha512-6KY5s6UI5J7SVYuZB4S/CZMyPylqyyNZco376NM2Z8Sb8OxEdp02e1jkKk/wZxIEmjQ6DRCEBhni+gpr9c4tvA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.2/css/perfect-scrollbar.min.css" integrity="sha512-ygIxOy3hmN2fzGeNqys7ymuBgwSCet0LVfqQbWY10AszPMn2rB9JY0eoG0m1pySicu+nvORrBmhHVSt7+GI9VA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <title>Список контактов</title>
+    </head>
+    <body>
+        <section class="layout-panel">
+            <div class="ui-block">
+                <div class="header">
+                    <i class="fas fa-paw"></i>Spring-Boot
+                    <div class="user-menu">
+                        <i class="fas fa-user-circle">
+                            <div class="menu">
+                                <div class="items">
+                                    <a href=""><i class="fas fa-sign-out-alt"></i> Выход</a>
+                                </div>
+                            </div>
+                        </i>
+                    </div>
+                </div>
+                <div class="body">
+                    <h3 class="breadcrumbs">
+                        <a href="">Главная</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <a href="">Пользователи</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <a href="">Иванов Иван Иванович</a>
+                        <i class="fas fa-chevron-right"></i>
+                        <span>Список контактов</span>
+                    </h3>
+
+                    <div class="menu">
+                        <em><i class="fas fa-users"></i> Пользователи</em>
+                        <ul>
+                            <li>
+                                <a href="">Список</a>
+                            </li>
+                            <li>
+                                <a href="">Поиск</a>
+                            </li>
+                            <li>
+                                <a href="">Создать</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="content" id="content">
+                        <table class="table-1">
+                            <thead>
+                                <tr>
+                                    <th width="10%">ID</th>
+                                    <th width="10%">Вкл/выкл</th>
+                                    <th width="10%">Тип</th>
+                                    <th width="50%">Значение</th>
+                                    <th width="20%">Действия</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>
+                                        <div class="contact-icon phone" title="Телефон"></div>
+                                    </td>
+                                    <td>
+                                        +7 (000) 123-45-67
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>
+                                        <div class="contact-icon email" title="Email"></div>
+                                    </td>
+                                    <td>
+                                        ivanov@example.com
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>
+                                        <div class="contact-icon skype" title="Skype"></div>
+                                    </td>
+                                    <td>
+                                        ivanov550
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>
+                                        <div class="contact-icon facebook" title="Facebook"></div>
+                                    </td>
+                                    <td>
+                                        ivanov.ivan
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>
+                                        <div class="contact-icon twitter" title="Twitter"></div>
+                                    </td>
+                                    <td>
+                                        @ivanov
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>
+                                        <div class="contact-icon youtube" title="YouTube"></div>
+                                    </td>
+                                    <td>
+                                        IvanIvanov
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" checked />
+                                    </td>
+                                    <td>
+                                        <div class="contact-icon vk" title="VK"></div>
+                                    </td>
+                                    <td>
+                                        ivan.ivanov
+                                    </td>
+                                    <td>
+                                        <div class="action">
+                                            <div class="action-btn">
+                                                <i class="fas fa-edit text-success" title="Редактировать"></i>
+                                            </div>
+                                            <div class="action-btn">
+                                                <i class="fas fa-times text-danger" title="Удалить"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="button-controls">
+                            <button type="button" class="btn btn-outline-success" onclick="showContactEdit()">
+                                <i class="fas fa-plus"></i>&nbsp;Добавить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="modal-background">
+            <div class="form-horizontal edit-contact">
+                <div class="form-header">Новый контакт</div>
+                <div class="form-row">
+                    <label for="user-contact-type" class="form-label">Тип</label>
+                    <select class="form-select">
+                        <option>&mdash;&mdash;&mdash; выберите &mdash;&mdash;&mdash;</option>
+                        <option value="10">Телефон</option>
+                        <option value="20">Email</option>
+                        <option value="30">Skype</option>
+                        <option value="40">Facebook</option>
+                        <option value="50">Twitter</option>
+                        <option value="60">YouTube</option>
+                        <option value="70">VK</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="user-contact-value" class="form-label">Значение</label>
+                    <input type="text" class="form-control" id="user-contact-value" placeholder="" />
+                </div>
+                <div class="form-row buttons">
+                    <button type="button" class="btn btn-primary" onclick="hideContactEdit()">OK</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="hideContactEdit()">Отмена</button>
+                </div>
+            </div>
+        </section>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.2/perfect-scrollbar.min.js" integrity="sha512-byagY9YdfRsmvM/9ld4XQ9mvd9uNhNOaMzvCYpPw1CLuoIXAdWR8/6rHjRwuWy0Pi+JGWjDHiE7tVGhtPd21ZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            $(document).ready(function() {
+                const content = document.querySelector('#content');
+                if (content) {
+                    const ps = new PerfectScrollbar(content);
+                }
+            });
+
+            function showContactEdit() {
+                $('.modal-background').css('display', 'flex');
+            }
+
+            function hideContactEdit() {
+                $('.modal-background').css('display', 'none');
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+<th:block th:fragment="default(route)">
+    <html lang="ru" xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <th:block th:insert="fragments/common.html :: meta"></th:block>
+            <th:block th:insert="fragments/common.html :: styles"></th:block>
+            <th:block th:insert="fragments/common.html :: title(${route})"></th:block>
+        </head>
+        <body>
+            <section class="layout-panel">
+                <div class="ui-block">
+                    <div class="header">
+                        <i class="fas fa-paw"></i>Spring-Boot
+                        <th:block th:insert="fragments/common.html :: user-menu"></th:block>
+                    </div>
+                    <div class="body">
+                        <th:block th:insert="fragments/common.html :: breadcrumbs(${route})"></th:block>
+
+                        <th:block th:insert="fragments/common.html :: menu(${route})"></th:block>
+
+                        <div class="content" id="content">
+                            <th:block th:switch="${route}">
+                                <th:block th:case="home" th:insert="pages/home.html :: content"></th:block>
+                                <th:block th:case="list" th:insert="pages/list.html :: content"></th:block>
+                                <th:block th:case="create" th:insert="pages/edit.html :: content(${route})"></th:block>
+                                <th:block th:case="edit" th:insert="pages/edit.html :: content(${route})"></th:block>
+                                <th:block th:case="seek" th:insert="pages/seek.html :: content"></th:block>
+                                <th:block th:case="contacts" th:insert="pages/contacts.html :: content"></th:block>
+
+                                <div th:case="*">Unknown!</div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <th:block th:insert="fragments/common.html :: preloader"></th:block>
+
+            <th:block th:insert="fragments/common.html :: scripts"></th:block>
+        </body>
+    </html>
+</th:block>
